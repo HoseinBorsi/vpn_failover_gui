@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "file": "meta/project.meta.json",
+    "project_id": "VPNF-2025-001",
+    "file_id": "pmeta-001-01",
+    "purpose": "شناسنامه رسمی پروژه VPNFailoverManager شامل اطلاعات ساختار و فایل‌ها",
+    "created": "2025-05-26"
+  },
+  "project_id": "VPNF-2025-001",
+  "name": "VPNFailoverManager",
+  "description": "مدیریت اولویت اتصال هوشمند بین NordVPN، WARP و اینترنت عادی با رابط گرافیکی PyQt",
+  "version": "1.0.0",
+  "created": "2025-05-26",
+  "language": "Python 3.10+",
+  "framework": "PyQt5",
+  "files": {
+    "main.py": "6834a54280ec819195d871a2a81dd5e4",
+    "ui/main_window.py": "6834a7e24e348191b47388d4b9a70877",
+    "core/vpn_manager.py": "6834a7ece6a08191bc2ba9c94266a160",
+    "core/metrics_backup.py": "6834a9bf8dd88191abe31fe7f7cc66f6",
+    "utils/logger.py": "6834aa5b7ad8819194fc0713517f2d67",
+    "requirements.txt": "6834ac92309c81918cc0734c580e5b11",
+    "README.md": "6834ae6d519c8191aaf6124887da0d85"
+  },
+  "filemap": "project_info/filemap.json",
+  "license": "MIT"
+}

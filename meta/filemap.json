@@ -1,0 +1,53 @@
+{
+  "_meta": {
+    "file": "meta/filemap.json",
+    "project_id": "VPNF-2025-001",
+    "file_id": "fmp-001-01",
+    "purpose": "لیست تمام فایل‌های پروژه با File ID و هدف مشخص",
+    "created": "2025-05-26"
+  },
+  "files": [
+    {
+      "file": "main.py",
+      "path": "main.py",
+      "id": "6834a54280ec819195d871a2a81dd5e4",
+      "purpose": "نقطه ورود برنامه PyQt و اجرای رابط گرافیکی اصلی"
+    },
+    {
+      "file": "main_window.py",
+      "path": "ui/main_window.py",
+      "id": "6834a7e24e348191b47388d4b9a70877",
+      "purpose": "رابط گرافیکی اصلی برای نمایش وضعیت VPN و لاگ‌ها"
+    },
+    {
+      "file": "vpn_manager.py",
+      "path": "core/vpn_manager.py",
+      "id": "6834a7ece6a08191bc2ba9c94266a160",
+      "purpose": "بررسی اتصال VPNها (Nord و WARP) و تنظیم متریک آداپتورها"
+    },
+    {
+      "file": "metrics_backup.py",
+      "path": "core/metrics_backup.py",
+      "id": "6834a9bf8dd88191abe31fe7f7cc66f6",
+      "purpose": "ذخیره‌سازی و بازیابی متریک آداپتورهای شبکه از فایل پشتیبان"
+    },
+    {
+      "file": "logger.py",
+      "path": "utils/logger.py",
+      "id": "6834aa5b7ad8819194fc0713517f2d67",
+      "purpose": "ثبت لاگ‌های سیستم و ارائه آن‌ها برای نمایش در GUI"
+    },
+    {
+      "file": "requirements.txt",
+      "path": "requirements.txt",
+      "id": "6834ac92309c81918cc0734c580e5b11",
+      "purpose": "لیست وابستگی‌های مورد نیاز برای اجرای پروژه"
+    },
+    {
+      "file": "README.md",
+      "path": "README.md",
+      "id": "6834ae6d519c8191aaf6124887da0d85",
+      "purpose": "معرفی پروژه VPNFailoverManager و توضیح اجرای آن برای GitHub"
+    }
+  ]
+}

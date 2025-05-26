@@ -1,0 +1,7 @@
+# 📁 File: requirements.txt
+# 🔗 Project ID: VPNF-2025-001
+# 🆔 File ID: 6834ac92309c81918cc0734c580e5b11
+# 📃 Purpose: لیست وابستگی‌های مورد نیاز برای اجرای پروژه VPNFailoverManager
+# 📅 Created on: 2025-05-26
+
+PyQt5>=5.15.9
