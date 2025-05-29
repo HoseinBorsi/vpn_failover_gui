@@ -4,7 +4,8 @@
     "project_id": "VPNF-2025-001",
     "file_id": "fmp-001-01",
     "purpose": "لیست تمام فایل‌های پروژه با File ID و هدف مشخص",
-    "created": "2025-05-26"
+    "created": "2025-05-26",
+    "last_edited": "2025-05-29"
   },
   "files": [
     {
@@ -32,10 +33,22 @@
       "purpose": "ذخیره‌سازی و بازیابی متریک آداپتورهای شبکه از فایل پشتیبان"
     },
     {
+      "file": "vpn_auto_router.py",
+      "path": "core/vpn_auto_router.py",
+      "id": "68385d9e1bc481919b88a46908407d9c",
+      "purpose": "تحلیل اطلاعات اتصال و تنظیم خودکار اولویت مسیر VPN"
+    },
+    {
       "file": "logger.py",
       "path": "utils/logger.py",
       "id": "6834aa5b7ad8819194fc0713517f2d67",
       "purpose": "ثبت لاگ‌های سیستم و ارائه آن‌ها برای نمایش در GUI"
+    },
+    {
+      "file": "vpn_info_collector.py",
+      "path": "utils/vpn_info_collector.py",
+      "id": "68385b7f8dd88191a1fa7e3011cc9b90",
+      "purpose": "جمع‌آوری اطلاعات سیستم و شبکه برای تحلیل وضعیت اتصال VPN و اولویت‌بندی"
     },
     {
       "file": "requirements.txt",

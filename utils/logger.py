@@ -3,12 +3,16 @@
 # 🆔 File ID: 6834aa5b7ad8819194fc0713517f2d67
 # 📃 Purpose: ثبت لاگ‌های سیستم و ارائه آن‌ها برای نمایش در GUI
 # 📅 Created on: 2025-05-26
+# 📌 Edited on: 2025-05-29 | Edit #1: تغییر مسیر لاگ به پوشه local log داخل برنامه به‌جای Temp
 
 import logging
 import os
 
-# 🔖 مسیر لاگ فایل در دایرکتوری Temp سیستم
-LOG_PATH = os.path.join(os.environ['TEMP'], 'vpn_failover.log')
+# 🔖 مسیر لاگ جدید در داخل دایرکتوری برنامه
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOG_DIR = os.path.join(BASE_DIR, 'local_logs')
+os.makedirs(LOG_DIR, exist_ok=True)
+LOG_PATH = os.path.join(LOG_DIR, 'vpn_failover.log')
 
 # 🎯 پیکربندی لاگر با سطح INFO و فرمت زمان‌دار
 logger = logging.getLogger("vpn_logger")

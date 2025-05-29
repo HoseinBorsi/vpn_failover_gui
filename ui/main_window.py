@@ -3,26 +3,28 @@
 # 🆔 File ID: 6834a7e24e348191b47388d4b9a70877
 # 📃 Purpose: رابط گرافیکی اصلی برای مدیریت وضعیت VPN و نمایش لاگ
 # 📅 Created on: 2025-05-26
-# 📌 Edited on: 2025-05-27T23:15Z | Edit #4: افزودن دکمه بررسی مسیر فعال اینترنت بر اساس متریک سیستم
+# 📌 Edited on: 2025-05-27T21:00Z | Edit #2: بازگشت به نسخه پایه با ابعاد اولیه و بدون افکت گرافیکی اضافی
+# 📌 Edited on: 2025-05-29 | Edit #3: افزودن دکمه روشن/خاموش و اسکرول خودکار لاگ به آخر
 
 from PyQt5.QtWidgets import (
     QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget,
-    QTextEdit, QTabWidget, QSizePolicy, QStyle, QHBoxLayout
+    QTextEdit, QTabWidget, QSizePolicy, QSpacerItem, QStyle
 )
 from PyQt5.QtCore import QTimer, Qt, QSize
 from PyQt5.QtGui import QFont
-from core.vpn_manager import get_vpn_status, reset_metrics, check_active_route
-from core.metrics_backup import save_current_metrics, restore_metrics
-from utils.logger import read_log
+from core.vpn_manager import get_vpn_status, reset_metrics
+from utils.logger import read_log, log_info
+import subprocess
+import sys
+import os
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("VPN Failover Manager")
-        self.resize(480, 360)
+        self.resize(480, 320)
         self.setMinimumSize(400, 280)
 
-        # --- تب‌ها ---
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("QTabBar::tab { padding: 8px 16px; font-size: 13px; }")
 
@@ -44,39 +46,20 @@ class MainWindow(QMainWindow):
         self.status_label.setFont(QFont("Segoe UI", 12))
         self.status_label.setWordWrap(True)
 
-        # دکمه‌های متریک
-        self.reset_button = QPushButton("🔁 بازنشانی متریک‌ها")
-        self.reset_button.setFont(QFont("Segoe UI", 10))
-        self.reset_button.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
-        self.reset_button.setIconSize(QSize(18, 18))
-        self.reset_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        self.reset_button.clicked.connect(self.handle_reset)
-
-        self.save_button = QPushButton("🧷 ذخیره متریک‌ها")
-        self.save_button.setFont(QFont("Segoe UI", 10))
-        self.save_button.clicked.connect(self.handle_save)
-
-        self.restore_button = QPushButton("♻️ بازیابی متریک‌ها")
-        self.restore_button.setFont(QFont("Segoe UI", 10))
-        self.restore_button.clicked.connect(self.handle_restore)
-
-        self.route_button = QPushButton("🔎 بررسی مسیر فعال")
-        self.route_button.setFont(QFont("Segoe UI", 10))
-        self.route_button.clicked.connect(self.handle_route_check)
-
-        # لایه افقی دکمه‌ها
-        button_layout = QHBoxLayout()
-        button_layout.setSpacing(8)
-        button_layout.addWidget(self.reset_button)
-        button_layout.addWidget(self.save_button)
-        button_layout.addWidget(self.restore_button)
-        button_layout.addWidget(self.route_button)
+        self.toggle_button = QPushButton("🟢 روشن")
+        self.toggle_button.setFont(QFont("Segoe UI", 10))
+        self.toggle_button.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+        self.toggle_button.setIconSize(QSize(18, 18))
+        self.toggle_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.toggle_button.setCheckable(True)
+        self.toggle_button.setChecked(True)
+        self.toggle_button.clicked.connect(self.toggle_vpn_logic)
 
         status_layout = QVBoxLayout()
         status_layout.setContentsMargins(10, 10, 10, 10)
         status_layout.setSpacing(12)
         status_layout.addWidget(self.status_label)
-        status_layout.addLayout(button_layout)
+        status_layout.addWidget(self.toggle_button)
         status_layout.addStretch()
         self.status_tab.setLayout(status_layout)
 
@@ -99,7 +82,8 @@ class MainWindow(QMainWindow):
         self.refresh()
 
     def refresh(self):
-        self.update_status()
+        if self.toggle_button.isChecked():
+            self.update_status()
         self.update_log()
 
     def update_status(self):
@@ -117,20 +101,17 @@ class MainWindow(QMainWindow):
     def update_log(self):
         logs = read_log()
         self.log_text.setText(logs)
+        self.log_text.verticalScrollBar().setValue(self.log_text.verticalScrollBar().maximum())
 
-    def handle_reset(self):
-        reset_metrics()
-        self.status_label.setText("🔁 متریک‌ها ریست شدند.")
-
-    def handle_save(self):
-        interfaces = ["Wi-Fi", "Cloudflare WARP", "NordLynx"]
-        save_current_metrics(interfaces)
-        self.status_label.setText("🧷 متریک‌ها ذخیره شدند.")
-
-    def handle_restore(self):
-        restore_metrics()
-        self.status_label.setText("♻️ متریک‌ها بازیابی شدند.")
-
-    def handle_route_check(self):
-        route_info = check_active_route()
-        self.status_label.setText(f"🔎 مسیر فعال: {route_info}")
+    def toggle_vpn_logic(self):
+        if self.toggle_button.isChecked():
+            self.toggle_button.setText("🟢 روشن")
+            self.toggle_button.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+            log_info("🔄 برنامه دوباره فعال شد.")
+            self.refresh()
+        else:
+            self.toggle_button.setText("🔴 خاموش")
+            self.toggle_button.setIcon(self.style().standardIcon(QStyle.SP_MediaStop))
+            self.status_label.setText("⛔ بررسی اتصال متوقف شد.")
+            self.status_label.setStyleSheet("color: gray;")
+            log_info("⛔ بررسی وضعیت VPN غیرفعال شد.")
